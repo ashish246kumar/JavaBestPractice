@@ -1,0 +1,14 @@
+****************************************************************************Controller Best Practice******************************************************
+@GetMapping("/findBook/{id}")
+	public ResponseEntity<?> getBook(@PathVariable int id) {
+		
+		try {
+		 Book b1=bookRepository.findById(id).orElseThrow(()->new NoSuchElementException("Book not found"));
+		 return ResponseEntity.ok(b1);
+		}
+		catch(NoSuchElementException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+		
+		}
+		
+	}
