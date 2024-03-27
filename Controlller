@@ -12,3 +12,23 @@
 		}
 		
 	}
+*********************************
+public void deleteBook( int id) {
+		Book book = bookRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Book not found"));
+        bookRepository.deleteById(id);
+	}
+@DeleteMapping("/delete/{id}")
+	public ResponseEntity<?> deleteBook(@PathVariable int id) {
+	
+		try {
+			bookSevice.deleteBook(id);
+			return ResponseEntity.ok("Book deleted Successfully");
+			}
+			catch(NoSuchElementException e) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+			
+			}
+		
+	}
+**************************
