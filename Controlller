@@ -1,17 +1,18 @@
 ****************************************************************************Controller Best Practice******************************************************
 @GetMapping("/findBook/{id}")
-	public ResponseEntity<?> getBook(@PathVariable int id) {
-		
-		try {
-		 Book b1=bookRepository.findById(id).orElseThrow(()->new NoSuchElementException("Book not found"));
-		 return ResponseEntity.ok(b1);
-		}
-		catch(NoSuchElementException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-		
-		}
-		
-	}
+    public ResponseEntity<?> getBook(@PathVariable int id) {
+        try {
+            Book book = bookSevice.getBookById(id);
+            return ResponseEntity.ok(book);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+ public Book getBookById(int id) {
+	        return bookRepository.findById(id)
+	                             .orElseThrow(() -> new NoSuchElementException("Book not found"));
+	    }
 *********************************
 public void deleteBook( int id) {
 		Book book = bookRepository.findById(id)
